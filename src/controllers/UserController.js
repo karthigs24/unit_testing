@@ -9,6 +9,10 @@ export const storeUser = (req, res) => {
     const user = new User(req.body);
     user.save((error, result) => {
         if (error) {
+            if (error.name === 'MongoError' && error.code === 11000) {
+                // Duplicate username
+                return res.status(500).send({ success: false, message: 'User already exist!' });
+            }
             res.error(error);
         } else {
             res.success(result);
