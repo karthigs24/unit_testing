@@ -7,5 +7,8 @@ export const responseHandler = (req, res, next) => {
     res.error = (body, message = 'ERROR', statusCode = 500) => {
         res.json({status:false, message:message, data:body}, statusCode);
     }
+    res.exception = (body, message = 'User already exist!', statusCode = 422) =>{
+        res.json({status:false, message:message, data:body}, statusCode)
+    }
     next();
 };

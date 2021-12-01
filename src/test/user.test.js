@@ -78,7 +78,8 @@ describe('/POST user', () => {
 describe('', () => {
     it('it should require new username', (done) => {
         const User = {
-            username: "test1"
+            username: "test1",
+            password: "test1"
         }
         chai.request(user)
             .post('/api/v1/user')
@@ -86,11 +87,12 @@ describe('', () => {
             .end((err, res) => {
                 res.should.have.status(422);
                 res.body.should.be.a('object');
-                res.body.should.have.property('message').eql('ERROR');
+                res.body.should.have.property('message').eql('User already exist!');
                 done();
             })
     })
 })
+
 describe('/GET users', () => {
     it('should return an user', (done) => {
         chai.request(user).get('/api/v1/users').end((err, res) => {

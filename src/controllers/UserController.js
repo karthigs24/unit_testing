@@ -11,10 +11,12 @@ export const storeUser = (req, res) => {
         if (error) {
             if (error.name === 'MongoError' && error.code === 11000) {
                 // Duplicate username
-                return res.status(500).send({ success: false, message: 'User already exist!' });
+                return res.error(
+                    { status: false, message: 'User already exist!', data: {} }, 'User already exist!', 422);
             }
-            res.error(error);
-        } else {
+            res.error(error)
+        }
+        else {
             res.success(result);
         }
     })
